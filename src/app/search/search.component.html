@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="col-12 col-lg-6 mx-auto text-light">
+    <!-- <input
+      type="text"
+      [(ngModel)]="selectedTrack"
+      [typeaheadAsync]="true"
+      [typeahead]="songs$"
+      typeaheadOptionField="name"
+      (typeaheadOnSelect)="songSelected($event)"
+      class="form-control"
+    /> -->
+    {{ test | async | json }}
+  </div>
+</div>
+<ng-template #songTemplate let-song="item"> </ng-template>
