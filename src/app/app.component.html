@@ -1,1 +1,18 @@
-<search></search>
+<search
+  [hidden]="selected"
+  (onSongSelected)="
+    selected = true;
+    viewContainerRef.clear();
+    viewContainerRef.createEmbeddedView(content, { $implicit: $event })
+  "
+></search>
+
+<ng-template #content let-song>
+  <div class="container" id="content">
+    <player
+      (onExit)="selected = false; viewContainerRef.clear()"
+      [song]="song"
+    ></player>
+    <keyboard></keyboard>
+  </div>
+</ng-template>

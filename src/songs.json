@@ -1,30 +1,42 @@
 [
   {
     "name": "Drugs You Should Try It",
-    "artist": "Travis Scott"
+    "artist": "Travis Scott",
+    "extension": "m4a"
   },
   {
     "name": "BACC (Bonus)",
-    "artist": "Travis Scott"
+    "artist": "Travis Scott",
+    "extension": "m4a"
   },
   {
     "name": "Backyard",
-    "artist": "Travis Scott"
+    "artist": "Travis Scott",
+    "extension": "m4a"
   },
   {
     "name": "Basement Freestyle",
-    "artist": "Travis Scott"
+    "artist": "Travis Scott",
+    "extension": "m4a"
   },
   {
     "name": "Grey",
-    "artist": "Travis Scott"
+    "artist": "Travis Scott",
+    "extension": "m4a"
   },
   {
     "name": "Skyfall (ft. Young Thug)",
-    "artist": "Travis Scott"
+    "artist": "Travis Scott",
+    "extension": "m4a"
   },
   {
     "name": "Quintana Pt. 2",
-    "artist": "Travis Scott"
+    "artist": "Travis Scott",
+    "extension": "m4a"
+  },
+  {
+    "name": "Been Around The World",
+    "artist": "A$AP Rocky",
+    "extension": "mp3"
   }
 ]

@@ -6,8 +6,8 @@ export interface JsMediaTags {
 export interface MediaTags {
   tags: {
     picture: {
-      data: any;
       format: string;
+      data: any;
     };
   };
 }

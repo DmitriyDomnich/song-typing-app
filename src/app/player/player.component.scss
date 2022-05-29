@@ -1,0 +1,42 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+#cover {
+  background-size: contain;
+}
+#volume {
+  position: absolute;
+  right: -1em;
+  bottom: 0;
+  transform: rotate(-90deg);
+}
+#progress {
+  appearance: none;
+  height: 1.35em;
+  background-image: linear-gradient(to right, purple 0% 100%);
+  padding-inline: 0.175rem;
+  cursor: pointer;
+  &:hover {
+    &::-webkit-slider-thumb {
+      opacity: 1;
+    }
+  }
+  &::-webkit-slider-thumb {
+    transition: all ease-in 100ms;
+    appearance: none;
+    opacity: 0;
+    width: 1.35rem;
+    height: 1.35rem;
+    // visibility: hidden;
+    z-index: 100;
+    position: relative;
+    background-color: $red;
+    border-radius: 50%;
+    &:hover {
+      background-color: $red-400;
+      transform: scale(1.15);
+    }
+    &:active {
+      background-color: $red-600;
+    }
+  }
+}

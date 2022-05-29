@@ -1,14 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import {
-  from,
-  fromEvent,
-  map,
-  mergeMap,
-  Observable,
-  switchMap,
-  tap,
-  toArray,
-} from 'rxjs';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { from, map, mergeMap, Observable, take, tap, toArray } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { Song } from '../models/song';
 import { JS_MEDIA_TAGS, JsMediaTags, MediaTags } from './jsmediatags-token';
@@ -19,14 +10,12 @@ import { JS_MEDIA_TAGS, JsMediaTags, MediaTags } from './jsmediatags-token';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
+  @Output() onSongSelected = new EventEmitter<Song>();
+
   selectedTrack = '';
   songs$: Observable<Song[]>;
   test: any;
   Reader: any;
-
-  songSelected(smth: any) {
-    console.log(smth);
-  }
 
   constructor(@Inject(JS_MEDIA_TAGS) reader: JsMediaTags) {
     this.Reader = reader;
@@ -34,14 +23,14 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
     let i = 0;
-    this.test = ajax<Song[]>('./songs.json').pipe(
+    this.songs$ = ajax<Song[]>('./songs.json').pipe(
       mergeMap(({ response }) => response),
       mergeMap((song) =>
         ajax<Blob>({
-          url: `songs/${song.name}.m4a`,
+          url: `songs/${song.name}.${song.extension}`,
           responseType: 'blob',
         }).pipe(
-          mergeMap(({ response }, ind) => {
+          mergeMap(({ response }) => {
             console.log('got song #' + i++);
             const reader = new this.Reader(response);
             reader.setTagsToRead(['picture']);
@@ -58,19 +47,25 @@ export class SearchComponent implements OnInit {
                 });
               })
             ).pipe(
-              switchMap((imgData) => {
-                const fileReader = new FileReader();
-                console.log('before', imgData);
-                fileReader.readAsDataURL(new Blob(imgData.tags.picture.data));
-
-                return fromEvent(fileReader, 'loadend').pipe(
-                  map((val) => (console.log('done'), { ...song }))
+              map((imgData) => {
+                const base64 = btoa(
+                  (<Array<any>>imgData.tags.picture.data).reduce(
+                    (acc, curr) => acc + String.fromCharCode(curr),
+                    ''
+                  )
                 );
-              })
+                return {
+                  ...song,
+                  cover: `data:${imgData.tags.picture.format};base64,${base64}`,
+                };
+              }),
+              take(1)
             );
           })
         )
-      )
+      ),
+      toArray(),
+      tap((val) => console.log(val))
     );
   }
 }

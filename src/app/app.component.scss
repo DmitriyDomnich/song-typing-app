@@ -1,0 +1,18 @@
+#content {
+  animation: move-up ease-out 450ms forwards;
+  position: relative;
+  top: 1.25rem;
+  // transform: translateY(200px);
+  // transition: transform ease-out 450ms;
+}
+// .move-up {
+//   transform: translateY(0);
+// }
+@keyframes move-up {
+  from {
+    transform: translateY(200px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

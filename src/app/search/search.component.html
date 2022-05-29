@@ -1,15 +1,36 @@
 <div class="container">
-  <div class="col-12 col-lg-6 mx-auto text-light">
-    <!-- <input
-      type="text"
-      [(ngModel)]="selectedTrack"
-      [typeaheadAsync]="true"
-      [typeahead]="songs$"
-      typeaheadOptionField="name"
-      (typeaheadOnSelect)="songSelected($event)"
-      class="form-control"
-    /> -->
-    {{ test | async | json }}
-  </div>
+  <ng-container *ngIf="songs$ | async as songs; else loading">
+    <div class="col-12 col-lg-6 mx-auto">
+      <h1 class="text-center display-2">Choose a song</h1>
+      <input
+        type="text"
+        [(ngModel)]="selectedTrack"
+        [typeahead]="songs"
+        typeaheadOptionField="name"
+        [typeaheadMinLength]="0"
+        [typeaheadItemTemplate]="songTemplate"
+        (typeaheadOnSelect)="onSongSelected.emit($event.item)"
+        class="form-control"
+      />
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <div class="row justify-content-center">
+      <div class="col-1 spinner-grow text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="col-1 spinner-grow text-danger mx-3" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="col-1 spinner-grow text-warning" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </ng-template>
 </div>
-<ng-template #songTemplate let-song="item"> </ng-template>
+<ng-template #songTemplate let-song="item">
+  <div>
+    <img class="song-cover" [src]="song.cover" />
+    <span> {{ song.name }} </span>
+  </div>
+</ng-template>
