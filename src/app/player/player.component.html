@@ -1,12 +1,21 @@
 <div class="row">
-  <div class="col-3 mx-auto position-relative">
+  <div
+    class="col-lg-8 col-xl-7 col-10 col-sm-9 col-md-8 mx-auto position-relative"
+  >
     <div
       id="cover"
       class="ratio ratio-1x1 shadow"
       [style.background-image]="song.cover | backgroundImage"
     ></div>
     <div id="volume" class="col-1 d-flex">
-      <i class="bi bi-volume-up-fill"></i>
+      <i
+        [class]="{
+          'bi-volume-up-fill': audio.volume > 0.5,
+          'bi-volume-down-fill': audio.volume <= 0.5,
+          'bi-volume-mute-fill': audio.volume === 0
+        }"
+        class="bi"
+      ></i>
       <input
         (input)="audio.volume = $any($event.target).value / 10"
         type="range"
@@ -19,28 +28,54 @@
       />
     </div>
   </div>
-  <!-- <button (click)="onExit.emit()" class="btn-close" aria-label="Close"></button> -->
 </div>
 <div class="d-flex align-items-center flex-column">
   <div class="p-2 pb-0">
     <h2>{{ song.name }}</h2>
   </div>
-  <div class="p-2 pb-0">
+  <div class="p-2 py-0">
     <h3>{{ song.artist }}</h3>
   </div>
-  <input
-    #progressInput
-    id="progress"
-    (input)="onInputProgress($any($event))"
-    (change)="audio.currentTime = $any($event.target).value"
-    class="d-block col-3 rounded-pill"
-    type="range"
-    min="0"
-    [max]="audio.duration"
-    [style.background-image]="progress$ | async"
-    value="0"
-  />
-  <div class="col-3 d-flex justify-content-around">
+  <div class="col-12">
+    <div class="row g-0">
+      <div class="col-2 lh-sm text-end pe-1">
+        {{ audio.currentTime | time }}
+      </div>
+      <div class="col-8 position-relative rounded-pill" id="progress-container">
+        <div
+          #thumb
+          data-seeking="false"
+          [style.left.%]="
+            thumb.dataset['seeking'] === 'false' &&
+            (audio.currentTime / audio.duration) * 100
+          "
+          id="progress-thumb"
+        ></div>
+        <input
+          #progressInput
+          id="progress"
+          (input)="
+            thumb.dataset['seeking'] = 'true'; onInputProgress($any($event))
+          "
+          (change)="
+            audio.currentTime = $any($event.target).value;
+            thumb.dataset['seeking'] = 'false'
+          "
+          class="d-block w-100"
+          type="range"
+          min="0"
+          [max]="audioDuration$ | async"
+          [style.background-image]="progress$ | async"
+          value="0"
+        />
+      </div>
+      <div class="col-2 ps-1 lh-sm">{{ audio.duration | time }}</div>
+    </div>
+  </div>
+  <div class="col-6 d-flex justify-content-around py-2">
+    <button (click)="onExit.emit()" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left"></i>
+    </button>
     <button
       (click)="audio.play()"
       class="btn btn-outline-primary"

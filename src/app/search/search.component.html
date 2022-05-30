@@ -3,6 +3,7 @@
     <div class="col-12 col-lg-6 mx-auto">
       <h1 class="text-center display-2">Choose a song</h1>
       <input
+        #songInput
         type="text"
         [(ngModel)]="selectedTrack"
         [typeahead]="songs"

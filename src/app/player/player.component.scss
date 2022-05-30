@@ -9,34 +9,36 @@
   bottom: 0;
   transform: rotate(-90deg);
 }
-#progress {
-  appearance: none;
-  height: 1.35em;
-  background-image: linear-gradient(to right, purple 0% 100%);
-  padding-inline: 0.175rem;
-  cursor: pointer;
+#progress-container {
+  overflow-x: hidden;
+
   &:hover {
-    &::-webkit-slider-thumb {
+    #progress-thumb {
       opacity: 1;
     }
   }
-  &::-webkit-slider-thumb {
-    transition: all ease-in 100ms;
-    appearance: none;
+  #progress-thumb {
+    position: absolute;
+    transform: translateX(-50%);
     opacity: 0;
+    transition: all linear 10ms;
+    background-color: $purple;
+    border-radius: 50%;
     width: 1.35rem;
     height: 1.35rem;
-    // visibility: hidden;
-    z-index: 100;
-    position: relative;
-    background-color: $red;
-    border-radius: 50%;
-    &:hover {
-      background-color: $red-400;
-      transform: scale(1.15);
-    }
-    &:active {
-      background-color: $red-600;
+  }
+  #progress {
+    appearance: none;
+    height: 1.35em;
+
+    background-image: linear-gradient(to right, var(--bs-dark) 0% 100%);
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      width: 1.35rem;
+      height: 1.35rem;
+      appearance: none;
+      opacity: 0;
     }
   }
 }

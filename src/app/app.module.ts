@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { PlayerModule } from './player/player.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchModule } from './search/search.module';
-import { KeyboardModule } from './keyboard/keyboard.module';
+import { LyricsModule } from './lyrics/lyrics.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,7 +15,7 @@ import { KeyboardModule } from './keyboard/keyboard.module';
     AppRoutingModule,
     PlayerModule,
     SearchModule,
-    KeyboardModule,
+    LyricsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

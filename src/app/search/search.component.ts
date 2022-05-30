@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { from, map, mergeMap, Observable, take, tap, toArray } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { Song } from '../models/song';
@@ -12,9 +20,10 @@ import { JS_MEDIA_TAGS, JsMediaTags, MediaTags } from './jsmediatags-token';
 export class SearchComponent implements OnInit {
   @Output() onSongSelected = new EventEmitter<Song>();
 
+  @ViewChild('songInput') songInput: ElementRef<HTMLInputElement>;
+
   selectedTrack = '';
   songs$: Observable<Song[]>;
-  test: any;
   Reader: any;
 
   constructor(@Inject(JS_MEDIA_TAGS) reader: JsMediaTags) {

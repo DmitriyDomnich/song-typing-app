@@ -1,4 +1,5 @@
 <search
+  #search
   [hidden]="selected"
   (onSongSelected)="
     selected = true;
@@ -9,10 +10,18 @@
 
 <ng-template #content let-song>
   <div class="container" id="content">
-    <player
-      (onExit)="selected = false; viewContainerRef.clear()"
-      [song]="song"
-    ></player>
-    <keyboard></keyboard>
+    <div class="row">
+      <player
+        class="col-lg-7 col-md-12"
+        (onExit)="
+          viewContainerRef.clear();
+          selected = false;
+          search.selectedTrack = '';
+          search.songInput.nativeElement.click()
+        "
+        [song]="song"
+      ></player>
+      <lyrics class="col-lg-5" [song]="song"></lyrics>
+    </div>
   </div>
 </ng-template>
