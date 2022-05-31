@@ -5,6 +5,7 @@ export interface JsMediaTags {
 }
 export interface MediaTags {
   tags: {
+    lyrics: string | { lyrics: string };
     picture: {
       format: string;
       data: any;

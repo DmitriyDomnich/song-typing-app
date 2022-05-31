@@ -7,7 +7,94 @@
       class="ratio ratio-1x1 shadow"
       [style.background-image]="song.cover | backgroundImage"
     ></div>
-    <div id="volume" class="col-1 d-flex">
+    <div
+      id="playback-rate"
+      class="btn-group position-absolute bottom-0"
+      dropdown
+      [dropup]="true"
+    >
+      <button
+        id="button-dropup"
+        dropdownToggle
+        type="button"
+        class="btn btn-secondary dropdown-toggle"
+        aria-controls="dropdown-dropup"
+      >
+        <i class="bi bi-speedometer"></i>
+      </button>
+      <ul
+        id="dropdown-dropup"
+        *dropdownMenu
+        class="dropdown-menu"
+        role="menu"
+        aria-labelledby="button-dropup"
+      >
+        <li role="menuitem">
+          <button
+            [class.active]="audio.playbackRate === 2"
+            class="dropdown-item"
+            (click)="audio.playbackRate = 2"
+          >
+            2
+          </button>
+        </li>
+        <li role="menuitem">
+          <button
+            [class.active]="audio.playbackRate === 1.5"
+            class="dropdown-item"
+            (click)="audio.playbackRate = 1.5"
+          >
+            1.5
+          </button>
+        </li>
+        <li role="menuitem">
+          <button
+            [class.active]="audio.playbackRate === 1.25"
+            class="dropdown-item"
+            (click)="audio.playbackRate = 1.25"
+          >
+            1.25
+          </button>
+        </li>
+        <li role="menuitem">
+          <button
+            [class.active]="audio.playbackRate === 1"
+            class="dropdown-item"
+            (click)="audio.playbackRate = 1"
+          >
+            1
+          </button>
+        </li>
+        <li role="menuitem">
+          <button
+            [class.active]="audio.playbackRate === 0.75"
+            class="dropdown-item"
+            (click)="audio.playbackRate = 0.75"
+          >
+            0.75
+          </button>
+        </li>
+        <li role="menuitem">
+          <button
+            [class.active]="audio.playbackRate === 0.5"
+            class="dropdown-item"
+            (click)="audio.playbackRate = 0.5"
+          >
+            0.5
+          </button>
+        </li>
+        <li role="menuitem">
+          <button
+            [class.active]="audio.playbackRate === 0.25"
+            class="dropdown-item"
+            (click)="audio.playbackRate = 0.25"
+          >
+            0.25
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div id="volume" class="col-1 d-flex position-absolute bottom-0">
       <i
         [class]="{
           'bi-volume-up-fill': audio.volume > 0.5,

@@ -42,7 +42,7 @@ export class SearchComponent implements OnInit {
           mergeMap(({ response }) => {
             console.log('got song #' + i++);
             const reader = new this.Reader(response);
-            reader.setTagsToRead(['picture']);
+            reader.setTagsToRead(['picture', 'lyrics']);
 
             return from(
               new Promise<MediaTags>((res, rej) => {
@@ -63,8 +63,10 @@ export class SearchComponent implements OnInit {
                     ''
                   )
                 );
+                const lyrics = imgData.tags.lyrics;
                 return {
                   ...song,
+                  lyrics: typeof lyrics === 'string' ? lyrics : lyrics?.lyrics,
                   cover: `data:${imgData.tags.picture.format};base64,${base64}`,
                 };
               }),
