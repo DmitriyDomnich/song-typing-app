@@ -1,10 +1,6 @@
 <ng-container *ngIf="lyrics; else noLyrics">
   <span
     class="cursor"
-    [style]="{
-      mr: letter !== ' ',
-      mb: letter === ' '
-    }"
     *ngFor="let letter of lyrics; let i = index"
     [letter]="i"
     >{{ letter }}</span
