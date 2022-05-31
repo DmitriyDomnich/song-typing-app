@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=B612+Mono&display=swap");
+
+:host {
+  text-align: justify;
+  white-space: pre-line;
+  max-height: 95vh;
+  overflow-y: auto;
+  font-family: "B612 Mono", monospace;
+}
+
+.cursor-right {
+  border-right: 2px solid blue;
+  margin-right: -2px;
+  // &::after {
+  //   content: "";
+  //   animation: border infinite both ease-in-out 1s;
+  //   border-right: 2px solid blue;
+  //   position: absolute;
+  //   inset: 0;
+  // }
+}
+.cursor-bottom {
+  border-bottom: 2px solid blue;
+  margin-bottom: -2px;
+  // &::after {
+  //   content: "";
+  //   animation: border infinite both ease-in-out 1s;
+  //   border-bottom: 2px solid blue;
+  //   position: absolute;
+  //   inset: 0;
+  // }
+}
+.cursor {
+  animation: border infinite both ease-in-out 1s;
+}
+@keyframes border {
+  from {
+    border-color: blue;
+  }
+  to {
+    border-color: transparent;
+  }
+}

@@ -1,0 +1,9 @@
+<ng-container *ngIf="lyrics; else noLyrics">
+  <span
+    class="cursor"
+    *ngFor="let letter of lyrics; let i = index"
+    [letter]="i"
+    >{{ letter }}</span
+  >
+</ng-container>
+<ng-template #noLyrics> Lyrics are not available for this song. </ng-template>

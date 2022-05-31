@@ -4,10 +4,11 @@
   background-size: contain;
 }
 #volume {
-  position: absolute;
-  right: -1em;
-  bottom: 0;
+  right: -1.2em;
   transform: rotate(-90deg);
+}
+#playback-rate {
+  transform: translateX(-115%);
 }
 #progress-container {
   overflow-x: hidden;

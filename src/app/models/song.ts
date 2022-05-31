@@ -3,4 +3,5 @@ export interface Song {
   artist: string;
   extension: string;
   cover?: any;
+  lyrics?: string;
 }
