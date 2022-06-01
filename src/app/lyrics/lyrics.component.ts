@@ -2,11 +2,12 @@ import {
   Component,
   HostListener,
   Input,
+  OnDestroy,
   OnInit,
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { fromEvent, Subscription, tap } from 'rxjs';
+import { fromEvent, Observable, Subscription, tap } from 'rxjs';
 import { Song } from '../models/song';
 import { LetterDirective } from './letter.directive';
 
@@ -15,7 +16,7 @@ import { LetterDirective } from './letter.directive';
   templateUrl: './lyrics.component.html',
   styleUrls: ['./lyrics.component.scss'],
 })
-export class LyricsComponent implements OnInit {
+export class LyricsComponent implements OnInit, OnDestroy {
   lyrics: string[] | undefined;
   private _letters: LetterDirective[];
 
@@ -26,7 +27,9 @@ export class LyricsComponent implements OnInit {
       const letter = letterDirective.getLetter();
       return !!letter && letter !== '\n';
     });
-    this._letters[this.currentLetterIndex].setCursor();
+    if (this._letters.length) {
+      this._letters[this.currentLetterIndex].setCursor();
+    }
   }
 
   @Input() set song({ lyrics }: Song) {
@@ -39,12 +42,21 @@ export class LyricsComponent implements OnInit {
     }
   }
 
+  trackBy(index: number, item: string) {
+    return item;
+  }
+
   currentLetterIndex = 0;
+  currentOffsetTop = 0;
 
   typing$ = fromEvent<KeyboardEvent>(window, 'keydown').pipe(
     tap(({ key }) => {
       const letterDirective = this._letters[this.currentLetterIndex];
-      console.log(letterDirective.getOffsetTop());
+      if (this.currentOffsetTop !== letterDirective.getOffsetTop()) {
+        letterDirective.scroll();
+        this.currentOffsetTop = letterDirective.getOffsetTop();
+      }
+
       if (key === letterDirective?.getLetter()) {
         letterDirective.styleLetter();
         letterDirective.removeCursor();
@@ -61,6 +73,13 @@ export class LyricsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.sub = this.typing$.subscribe();
+    if (this.lyrics?.length) {
+      this.sub = this.typing$.subscribe();
+    }
+  }
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

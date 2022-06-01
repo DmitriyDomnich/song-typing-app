@@ -1,7 +1,7 @@
-<ng-container *ngIf="lyrics; else noLyrics">
+<ng-container *ngIf="lyrics?.length; else noLyrics">
   <span
     class="cursor"
-    *ngFor="let letter of lyrics; let i = index"
+    *ngFor="let letter of lyrics; let i = index; trackBy: trackBy"
     [letter]="i"
     >{{ letter }}</span
   >
