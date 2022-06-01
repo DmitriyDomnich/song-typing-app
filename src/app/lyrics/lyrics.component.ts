@@ -7,7 +7,7 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { fromEvent, Observable, Subscription, tap } from 'rxjs';
+import { fromEvent, Subscription, tap } from 'rxjs';
 import { Song } from '../models/song';
 import { LetterDirective } from './letter.directive';
 
@@ -81,5 +81,6 @@ export class LyricsComponent implements OnInit, OnDestroy {
     if (this.sub) {
       this.sub.unsubscribe();
     }
+    this.sub = this.typing$.subscribe();
   }
 }
